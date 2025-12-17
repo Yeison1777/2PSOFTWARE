@@ -29,8 +29,9 @@ services:
       context: ./uml-editor
     environment:
       NODE_ENV: production
-      # Use relative API base so it works behind Nginx on any host/port.
-      NEXT_PUBLIC_API_URL: /api
+      # Use basePath-aware API URL for /app2/ deployment
+      NEXT_PUBLIC_BASE_PATH: /app2
+      NEXT_PUBLIC_API_URL: /app2/api
     depends_on:
       - backend
     ports:

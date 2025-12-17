@@ -2,6 +2,7 @@ import { logger } from './logger'
 
 // Default to relative API base so deployments behind a reverse proxy (Nginx) work
 // regardless of host/port. This avoids browsers trying to call 127.0.0.1.
+// When basePath is set (e.g., /app2), API calls should use the basePath prefix
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '/api'
 
 export interface RegisterRequest {
