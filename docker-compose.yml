@@ -8,8 +8,6 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./uml-editor-backend/init_database.sql:/docker-entrypoint-initdb.d/init_database.sql:ro
-    ports:
-      - "5432:5432"
 
   backend:
     build:
@@ -19,22 +17,22 @@ services:
       PORT: 8000
       DATABASE_URL: postgresql://postgres:postgres@db:5432/uml_editor
       JWT_SECRET_KEY: change-me-in-production
-      CORS_ORIGINS: http://localhost:3000
+      CORS_ORIGINS: http://localhost:13000
     depends_on:
       - db
     ports:
-      - "8000:8000"
+      - "127.0.0.1:18000:8000"
 
   frontend:
     build:
       context: ./uml-editor
     environment:
       NODE_ENV: production
-      NEXT_PUBLIC_API_URL: http://localhost:8000
+      NEXT_PUBLIC_API_URL: http://localhost:18000
     depends_on:
       - backend
     ports:
-      - "3000:3000"
+      - "127.0.0.1:13000:3000"
 
 volumes:
   pgdata:
