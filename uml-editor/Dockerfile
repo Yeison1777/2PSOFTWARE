@@ -1,7 +1,9 @@
 FROM node:22-slim AS deps
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm ci
+# The lockfile was generated on Windows and may only include the Win32 optional binary
+# for lightningcss. Force-install the Linux (glibc) binary so Next/Tailwind can build.
+RUN npm ci && npm i --no-save lightningcss-linux-x64-gnu@1.30.2
 
 FROM node:22-slim AS builder
 WORKDIR /app
