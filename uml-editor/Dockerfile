@@ -1,11 +1,11 @@
 FROM node:22-slim AS deps
 WORKDIR /app
 COPY package.json package-lock.json ./
-# The lockfile was generated on Windows and may only include Win32 optional native binaries.
-# Force-install Linux (glibc) native binaries so Next/Tailwind can build in Docker.
-RUN npm ci \
-  && npm i --no-save lightningcss-linux-x64-gnu@1.30.2 \
-  && npm i --no-save @tailwindcss/oxide-linux-x64-gnu@4.1.16
+# The lockfile was generated on Windows; on Linux this often causes npm to skip optional
+# native binaries (Tailwind oxide / lightningcss). For Docker builds we regenerate the
+# lock inside Linux to reliably install the correct native bindings.
+RUN rm -f package-lock.json \
+  && npm install --include=optional
 
 FROM node:22-slim AS builder
 WORKDIR /app
