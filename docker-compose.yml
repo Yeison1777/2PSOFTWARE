@@ -17,7 +17,8 @@ services:
       PORT: 8000
       DATABASE_URL: postgresql://postgres:postgres@db:5432/uml_editor
       JWT_SECRET_KEY: change-me-in-production
-      CORS_ORIGINS: http://localhost:13000
+      # Allow browser access when the app is published via Nginx on a different public port.
+      CORS_ORIGINS: http://software3dlv.duckdns.org:8001
     depends_on:
       - db
     ports:
@@ -28,7 +29,8 @@ services:
       context: ./uml-editor
     environment:
       NODE_ENV: production
-      NEXT_PUBLIC_API_URL: http://localhost:18000
+      # Use relative API base so it works behind Nginx on any host/port.
+      NEXT_PUBLIC_API_URL: /api
     depends_on:
       - backend
     ports:
