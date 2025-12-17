@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: '/app2',
   typescript: {
     ignoreBuildErrors: false,
   },
