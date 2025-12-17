@@ -49,7 +49,9 @@ def get_password_hash(password: str) -> str:
     try:
         return pwd_context.hash(password)
     except Exception:
-        return ""
+        # Fallback for environments where bcrypt native deps are unavailable.
+        # We support verifying legacy SHA-256 hashes in `verify_password`.
+        return hashlib.sha256(password.encode("utf-8")).hexdigest()
 
 def needs_password_rehash(stored_hash: str) -> bool:
     """Return True if stored hash is legacy or needs upgrading."""
