@@ -68,7 +68,7 @@ export function useRealtimeSync({
       const token = tokenManager.get()
       
       // Build SSE URL with token as query param
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000'
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || '/api'
       const url = `${apiUrl}/diagrams/${resolvedId}/stream${token ? `?token=${encodeURIComponent(token)}` : ''}`
 
       logger.log('Connecting to SSE:', url)

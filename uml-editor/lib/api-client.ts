@@ -1,6 +1,8 @@
 import { logger } from './logger'
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000'
+// Default to relative API base so deployments behind a reverse proxy (Nginx) work
+// regardless of host/port. This avoids browsers trying to call 127.0.0.1.
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '/api'
 
 export interface RegisterRequest {
   email: string
